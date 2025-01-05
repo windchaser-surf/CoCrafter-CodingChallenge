@@ -76,7 +76,7 @@ class FolderViewSet(viewsets.ModelViewSet):
         except Folder.DoesNotExist:
             return Response({"detail": "Folder not found."}, status=status.HTTP_404_NOT_FOUND)
     
-    def update(self, request, pk=None):
+    def update(self, request, pk=None, partial=False):
         """
         Handle folder update via a PATCH request.
 
@@ -97,7 +97,7 @@ class FolderViewSet(viewsets.ModelViewSet):
             return Response({"detail": "Folder not found"}, status = status.HTTP_404_NOT_FOUND)
         
         try:
-            updateFolder = FolderService.update_folder(folder, request.data)
+            updateFolder = FolderService.update_folder(folder, request.data, partial)
             return Response(FolderSerializer(updateFolder).data, status=status.HTTP_200_OK)
         except ValidationException as e:
             return Response({"detail": e.message}, status=status.HTTP_400_BAD_REQUEST)

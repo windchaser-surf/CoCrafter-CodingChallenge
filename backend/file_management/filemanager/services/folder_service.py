@@ -35,7 +35,7 @@ class FolderService:
             raise NotFoundException(f"Parent folder with ID {parentId} not found.")
         return FolderFactory.create_subfolder(parentFolder)
     
-    def update_folder(folder, data):
+    def update_folder(folder, data, partial):
         """
         Handle folder update by using the FolderSerializer for validation and saving.
 
@@ -59,7 +59,7 @@ class FolderService:
         if FolderRepository.is_folder_name_unique(parentId, newName, folder.id): 
             raise ValidationException("Folder name already exists")
         
-        serializer = FolderSerializer(folder, data=data, partial=True)
+        serializer = FolderSerializer(folder, data=data, partial=partial)
         if serializer.is_valid():
             return serializer.save()
         else: 
