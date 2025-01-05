@@ -24,7 +24,7 @@ make up
 - **Folder and Document Creation**:  
   - The biggest challenge was handling edge cases and validations (e.g., preventing duplicate folder names at the same level)  
   - Solution: Implemented business logic for name validation during folder creation  
-  - **Documents with the same name**:  
+- **Documents with the same name**:  
   - Challenge: Ensuring no duplicate documents are stored  
   - Solution: Appended a counter to the filename when a name duplication is detected  
 
