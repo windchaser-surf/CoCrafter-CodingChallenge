@@ -4,7 +4,7 @@ To start the containers, you can use the following command:
 
 ```bash
 make up
-
+```
 ## How long it took you to solve this?
 
 - It took me approximately 10 hours to solve the task. During this time, I not only focused on implementing the solution but also deepened my knowledge of best practices in REST API design and design patterns. The research and study of these topics helped me develop a robust and maintainable solution.
