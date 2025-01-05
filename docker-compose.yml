@@ -1,0 +1,75 @@
+# This is just a suggestion. You may add any services you find necessary here.
+services:
+  s3mock:
+    image: adobe/s3mock:latest
+    environment:
+      - debug=true
+      - retainFilesOnExit=true
+      - root=containers3root
+      - initialBuckets=cocrafter-dev
+    expose:
+      - 9090
+    volumes:
+      - ./locals3root:/containers3root
+
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: frontend
+    ports:
+      - 3000:3000
+    environment:
+      - VITE_BACKEND_URL=http://localhost:8000
+
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: backend
+    container_name: backend
+    expose:
+      - 8000
+    environment:
+      - DATASOURCE_URL=jdbc:postgresql://db:5432/db
+      - DATASOURCE_USERNAME=postgres
+      - DATASOURCE_PASSWORD=postgres
+      - S3_ENDPOINT=http://s3mock:9090
+  
+    depends_on:
+      - db
+      - s3mock
+    restart: always
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db
+    expose:
+      - 5432
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    volumes: 
+    - ./nginx:/etc/nginx/conf.d
+    depends_on: 
+      - backend
+    expose:
+      - 8000
+    ports:
+      - 8000:8000
+
+  legacy-backend:
+    build:
+      dockerfile: Dockerfile
+      context: legacy-backend
+    expose:
+      - 8003
+    restart: always
+
+  adminer: 
+    container_name: adminer
+    image: adminer
+    ports: 
+      - "8080:8080"
