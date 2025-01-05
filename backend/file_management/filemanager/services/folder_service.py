@@ -1,6 +1,6 @@
 from ..repositories.folder_repository import FolderRepository
-from ..exceptions import ValidationException
-from ..factories.folder_factory import FolderFactory, NotFoundException
+from ..exceptions import ValidationException, NotFoundException
+from ..factories.folder_factory import FolderFactory
 from ..serializers import FolderSerializer
 
 class FolderService: 
