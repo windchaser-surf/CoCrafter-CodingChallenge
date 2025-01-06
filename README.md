@@ -41,4 +41,8 @@ make up
 3. **Prevent Duplicate Documents**  
    - Ensure that documents with the same name and content cannot be uploaded multiple times  
    - Avoid unnecessary database queries and operations  
-   - Improve efficiency and performance, especially with large datasets  
+   - Improve efficiency and performance, especially with large datasets
+
+4. **CSRF Protection**
+
+   - Enable CSRF protection for all state-changing API endpoints.
